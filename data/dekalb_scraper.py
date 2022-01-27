@@ -136,14 +136,15 @@ def run(output_format):
     print(f"Unknown output format: '{output_format}'!")
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--output", nargs="?", choices=["json", "csv"], help="Output format"
-)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--output", nargs="?", choices=["json", "csv"], help="Output format"
+    )
 
-args = parser.parse_args()
-if args.output is None:
-    parser.print_help()
-    sys.exit(1)
+    args = parser.parse_args()
+    if args.output is None:
+        parser.print_help()
+        sys.exit(1)
 
-run(args.output)
+    run(args.output)

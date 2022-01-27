@@ -1,0 +1,29 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+    client.knative.dev/user-image: us-east1-docker.pkg.dev/georgia-courtbot/cloud-run-source-deploy/cloud
+    run.googleapis.com/ingress: all
+    run.googleapis.com/ingress-status: all
+  labels:
+    cloud.googleapis.com/location: us-east1
+  name: cloud
+  namespace: "988548245474"
+spec:
+  template:
+    spec:
+      containerConcurrency: 80
+      containers:
+        - image: us-east1-docker.pkg.dev/georgia-courtbot/cloud-run-source-deploy/cloud@sha256:7ba43e640cf6c1cc429d8e7994d433c1f88b72b4b6d10e55bbcc40c4cb575a90
+          ports:
+            - containerPort: 8080
+              name: http1
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+      serviceAccountName: 988548245474-compute@developer.gserviceaccount.com
+      timeoutSeconds: 3600
+  traffic:
+    - latestRevision: true
+      percent: 100
